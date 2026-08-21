@@ -19,10 +19,6 @@ body {
     color: white;
 }
 
-/* =========================
-   NAVBAR
-========================= */
-
 header {
     height: 70px;
     background: #0e1118;
@@ -62,11 +58,6 @@ nav button.active {
     color: white;
 }
 
-
-/* =========================
-   MAIN
-========================= */
-
 .container {
     width: min(1100px, 92%);
     margin: auto;
@@ -94,11 +85,6 @@ nav button.active {
     line-height: 1.6;
 }
 
-
-/* =========================
-   STATS
-========================= */
-
 .stats {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -122,11 +108,6 @@ nav button.active {
     color: #858fa1;
 }
 
-
-/* =========================
-   SEARCH
-========================= */
-
 .controls {
     display: flex;
     gap: 10px;
@@ -145,11 +126,6 @@ select {
 input {
     flex: 1;
 }
-
-
-/* =========================
-   LEVEL LIST
-========================= */
 
 .list {
     background: #11151e;
@@ -215,11 +191,6 @@ input {
     font-weight: normal;
 }
 
-
-/* =========================
-   PAGES
-========================= */
-
 .page {
     display: none;
 }
@@ -227,11 +198,6 @@ input {
 .page.active {
     display: block;
 }
-
-
-/* =========================
-   BUTTONS
-========================= */
 
 button.primary {
     background: #8b5cf6;
@@ -246,11 +212,6 @@ button.primary {
 button.primary:hover {
     background: #7c4ce0;
 }
-
-
-/* =========================
-   LEVEL DETAIL
-========================= */
 
 .back {
     margin: 35px 0 15px;
@@ -313,11 +274,6 @@ button.primary:hover {
     margin-bottom: 5px;
 }
 
-
-/* =========================
-   ADMIN
-========================= */
-
 .admin {
     margin-top: 30px;
 }
@@ -330,7 +286,7 @@ button.primary:hover {
 
 .admin-row {
     display: grid;
-    grid-template-columns: 1fr 120px 160px;
+    grid-template-columns: 1fr 140px 170px;
     padding: 15px;
     border-bottom: 1px solid #252b38;
     align-items: center;
@@ -354,11 +310,6 @@ button.primary:hover {
     cursor: pointer;
 }
 
-
-/* =========================
-   MODAL
-========================= */
-
 .modal {
     display: none;
     position: fixed;
@@ -367,6 +318,7 @@ button.primary:hover {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    z-index: 100;
 }
 
 .modal.active {
@@ -408,12 +360,20 @@ button.primary:hover {
     color: white;
     padding: 10px 15px;
     border-radius: 8px;
+    cursor: pointer;
 }
 
+.loading {
+    padding: 40px;
+    text-align: center;
+    color: #858fa1;
+}
 
-/* =========================
-   MOBILE
-========================= */
+.error {
+    padding: 30px;
+    text-align: center;
+    color: #ff8b99;
+}
 
 @media(max-width:700px) {
 
@@ -449,52 +409,36 @@ button.primary:hover {
         grid-template-columns: 1fr;
     }
 
+    .admin-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
 }
 
 </style>
 </head>
 
-
 <body>
-
-
-<!-- =========================
-     NAVBAR
-========================= -->
 
 <header>
 
 <div class="logo">
-
 NDL <span>• Nerfed Demonlist</span>
-
 </div>
-
 
 <nav>
 
-<button
-class="active"
-onclick="showPage('home')">
-
+<button class="active" onclick="showPage('home')">
 Demonlist
-
 </button>
 
-
-<button
-onclick="showPage('players')">
-
+<button onclick="showPage('players')">
 Players
-
 </button>
 
-
-<button
-onclick="showPage('admin')">
-
+<button onclick="showPage('admin')">
 Admin
-
 </button>
 
 </nav>
@@ -502,17 +446,11 @@ Admin
 </header>
 
 
+<!-- HOME -->
 
-<!-- =========================
-     HOME
-========================= -->
-
-<div
-id="home"
-class="page active">
+<div id="home" class="page active">
 
 <div class="container">
-
 
 <div class="hero">
 
@@ -520,27 +458,19 @@ class="page active">
 Nerfed Demonlist
 </small>
 
-
 <h1>
 Top Demons
 </h1>
 
-
 <p>
-
 The NDL — Nerfed Demonlist.
 A community-driven ranking of Geometry Dash demons.
-
 </p>
 
 </div>
 
 
-
-<!-- STATS -->
-
 <div class="stats">
-
 
 <div class="stat">
 
@@ -558,7 +488,7 @@ Ranked Levels
 <div class="stat">
 
 <strong id="playerCount">
-4
+0
 </strong>
 
 <span>
@@ -567,15 +497,10 @@ Players
 
 </div>
 
-
 </div>
 
 
-
-<!-- SEARCH -->
-
 <div class="controls">
-
 
 <input
 id="search"
@@ -583,62 +508,57 @@ placeholder="Search levels or creators..."
 oninput="renderLevels()"
 >
 
-
 <select
 id="difficulty"
 onchange="renderLevels()">
-
 
 <option value="all">
 All Difficulties
 </option>
 
-
-<option value="Extreme">
-Extreme Demon
+<option value="Easy Demon">
+Easy Demon
 </option>
 
-
-<option value="Insane">
-Insane Demon
+<option value="Medium Demon">
+Medium Demon
 </option>
 
-
-<option value="Hard">
+<option value="Hard Demon">
 Hard Demon
 </option>
 
+<option value="Insane Demon">
+Insane Demon
+</option>
+
+<option value="Extreme Demon">
+Extreme Demon
+</option>
 
 </select>
 
 </div>
 
 
+<div class="list" id="levelList">
 
-<!-- LEVEL LIST -->
-
-<div
-class="list"
-id="levelList">
+<div class="loading">
+Loading NDL...
 </div>
-
 
 </div>
 
 </div>
 
+</div>
 
 
-<!-- =========================
-     PLAYERS
-========================= -->
+<!-- PLAYERS -->
 
-<div
-id="players"
-class="page">
+<div id="players" class="page">
 
 <div class="container">
-
 
 <div class="hero">
 
@@ -646,43 +566,34 @@ class="page">
 NDL Leaderboard
 </small>
 
-
 <h1>
 Players
 </h1>
 
-
 <p>
-
 Player rankings based on NDL points.
-
 </p>
 
 </div>
 
+<div class="list" id="playersList">
 
-<div
-class="list"
-id="playersList">
-</div>
-
-
+<div class="loading">
+Player system coming soon.
 </div>
 
 </div>
 
+</div>
+
+</div>
 
 
-<!-- =========================
-     ADMIN
-========================= -->
+<!-- ADMIN -->
 
-<div
-id="admin"
-class="page">
+<div id="admin" class="page">
 
 <div class="container">
-
 
 <div class="hero">
 
@@ -690,20 +601,15 @@ class="page">
 NDL Control Panel
 </small>
 
-
 <h1>
 Admin
 </h1>
 
-
 <p>
-
-Add, edit and remove levels from the Nerfed Demonlist.
-
+Manage the levels in the Nerfed Demonlist.
 </p>
 
 </div>
-
 
 
 <div class="admin-header">
@@ -711,7 +617,6 @@ Add, edit and remove levels from the Nerfed Demonlist.
 <h2>
 Levels
 </h2>
-
 
 <button
 class="primary"
@@ -724,29 +629,24 @@ onclick="openAdd()">
 </div>
 
 
+<div class="list admin" id="adminList">
 
-<div
-class="list admin"
-id="adminList">
-</div>
-
-
+<div class="loading">
+Loading...
 </div>
 
 </div>
 
+</div>
+
+</div>
 
 
-<!-- =========================
-     LEVEL DETAIL
-========================= -->
+<!-- LEVEL DETAIL -->
 
-<div
-id="detail"
-class="page">
+<div id="detail" class="page">
 
 <div class="container">
-
 
 <div
 class="back"
@@ -756,30 +656,22 @@ onclick="showPage('home')">
 
 </div>
 
-
 <div
 class="detail"
 id="detailContent">
-</div>
-
 
 </div>
 
 </div>
 
+</div>
 
 
-<!-- =========================
-     ADD / EDIT MODAL
-========================= -->
+<!-- MODAL -->
 
-<div
-class="modal"
-id="modal">
-
+<div class="modal" id="modal">
 
 <div class="modal-box">
-
 
 <h2 id="modalTitle">
 Add Level
@@ -787,7 +679,6 @@ Add Level
 
 
 <div class="form">
-
 
 <input
 type="hidden"
@@ -816,24 +707,34 @@ placeholder="Verifier"
 <select id="levelDifficulty">
 
 <option>
-Extreme
+Easy Demon
 </option>
 
 <option>
-Insane
+Medium Demon
 </option>
 
 <option>
-Hard
+Hard Demon
+</option>
+
+<option>
+Insane Demon
+</option>
+
+<option>
+Extreme Demon
 </option>
 
 </select>
 
 
 <input
-id="levelPoints"
+id="levelRank"
 type="number"
-placeholder="Points"
+min="1"
+max="150"
+placeholder="Rank (1-150)"
 >
 
 
@@ -842,13 +743,10 @@ id="levelVideo"
 placeholder="YouTube URL"
 >
 
-
 </div>
 
 
-
 <div class="modal-buttons">
-
 
 <button
 class="cancel"
@@ -858,7 +756,6 @@ Cancel
 
 </button>
 
-
 <button
 class="primary"
 onclick="saveLevel()">
@@ -867,155 +764,198 @@ Save
 
 </button>
 
-
-</div>
-
-
 </div>
 
 </div>
 
+</div>
 
 
-<script>
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
 /* =========================
-   LEVEL DATABASE
+   FIREBASE CONFIG
 ========================= */
 
-let levels =
-JSON.parse(
-localStorage.getItem("ndl_levels")
-) || [
+const firebaseConfig = {
 
-{
-id: 1,
-name: "Acheron",
-creator: "Ryamu",
-verifier: "Zoink",
-difficulty: "Extreme",
-points: 1000,
-video: "https://youtube.com/"
-},
+    apiKey: "AIzaSyBU2arXqJml65u3XNNHke7PVdEC0X95rLo",
 
-{
-id: 2,
-name: "Tidal Wave",
-creator: "OniLink",
-verifier: "Zoink",
-difficulty: "Extreme",
-points: 950,
-video: "https://youtube.com/"
-},
+    authDomain:
+    "nerfed-demonlist.firebaseapp.com",
 
-{
-id: 3,
-name: "Silent Clubstep",
-creator: "TheRealSailent",
-verifier: "PaQoe",
-difficulty: "Extreme",
-points: 900,
-video: "https://youtube.com/"
-},
+    projectId:
+    "nerfed-demonlist",
 
-{
-id: 4,
-name: "Kyouki",
-creator: "Viprin",
-verifier: "Zoink",
-difficulty: "Extreme",
-points: 850,
-video: "https://youtube.com/"
-},
+    storageBucket:
+    "nerfed-demonlist.firebasestorage.app",
 
-{
-id: 5,
-name: "Change of Scene",
-creator: "Trick",
-verifier: "Trick",
-difficulty: "Extreme",
-points: 800,
-video: "https://youtube.com/"
-}
+    messagingSenderId:
+    "996399312994",
 
-];
+    appId:
+    "1:996399312994:web:3cd9bc6b38185e4666a13b",
 
+    measurementId:
+    "G-D9BVJBBGTQ"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+const db =
+getFirestore(app);
 
 
 /* =========================
-   PLAYER DATABASE
+   LEVEL DATA
 ========================= */
 
-let players = [
-
-{
-name: "Zoink",
-points: 4820,
-records: 8,
-hardest: "Acheron"
-},
-
-{
-name: "Trick",
-points: 3610,
-records: 6,
-hardest: "Tidal Wave"
-},
-
-{
-name: "PaQoe",
-points: 2740,
-records: 4,
-hardest: "Silent Clubstep"
-},
-
-{
-name: "BoldStep",
-points: 1980,
-records: 3,
-hardest: "Kyouki"
-}
-
-];
-
+let levels = [];
 
 
 /* =========================
-   SAVE DATA
+   NDL POINT SYSTEM
 ========================= */
 
-function saveData() {
+function calculatePoints(rank) {
 
-localStorage.setItem(
-"ndl_levels",
-JSON.stringify(levels)
-);
+    rank = Number(rank);
 
+    if (rank <= 1) {
+        return 350;
+    }
+
+    if (rank >= 150) {
+        return 18.71;
+    }
+
+    const value =
+        18.71 +
+        (350 - 18.71) *
+        Math.pow(
+            (150 - rank) / 149,
+            0.65
+        );
+
+    return Math.round(value * 100) / 100;
 }
 
+
+/* =========================
+   LOAD LEVELS
+========================= */
+
+async function loadLevels() {
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(db, "levels")
+            );
+
+        levels = [];
+
+        snapshot.forEach(
+            documentSnapshot => {
+
+                levels.push({
+
+                    id:
+                        documentSnapshot.id,
+
+                    ...documentSnapshot.data()
+
+                });
+
+            }
+        );
+
+
+        levels.sort(
+            (a,b) =>
+                Number(a.rank) -
+                Number(b.rank)
+        );
+
+
+        document
+            .getElementById("levelCount")
+            .textContent =
+            levels.length;
+
+
+        renderLevels();
+        renderAdmin();
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        document
+            .getElementById("levelList")
+            .innerHTML = `
+
+            <div class="error">
+
+            Failed to load the NDL.
+
+            <br><br>
+
+            Check your Firebase
+            Firestore rules.
+
+            </div>
+
+            `;
+
+    }
+
+}
 
 
 /* =========================
    PAGE SWITCHING
 ========================= */
 
-function showPage(page) {
+window.showPage = function(page) {
 
-document
-.querySelectorAll(".page")
-.forEach(
-element =>
-element.classList.remove("active")
-);
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            element =>
+                element.classList.remove("active")
+        );
 
 
-document
-.getElementById(page)
-.classList.add("active");
+    document
+        .getElementById(page)
+        .classList.add("active");
 
-}
-
+};
 
 
 /* =========================
@@ -1024,382 +964,352 @@ document
 
 function sortedLevels() {
 
-return [...levels].sort(
-(a,b) =>
-b.points - a.points
-);
+    return [...levels].sort(
+        (a,b) =>
+            Number(a.rank) -
+            Number(b.rank)
+    );
 
 }
-
 
 
 /* =========================
-   RENDER DEMONLIST
+   RENDER LEVELS
 ========================= */
 
-function renderLevels() {
+window.renderLevels = function() {
 
-let search =
-document
-.getElementById("search")
-.value
-.toLowerCase();
+    const search =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
 
 
-let difficulty =
-document
-.getElementById("difficulty")
-.value;
+    const difficulty =
+        document
+            .getElementById("difficulty")
+            .value;
 
 
-let sorted =
-sortedLevels();
+    const sorted =
+        sortedLevels();
 
 
-let filtered =
-sorted.filter(level => {
+    const filtered =
+        sorted.filter(level => {
 
+            const searchMatch =
 
-let searchMatch =
+                String(level.name || "")
+                    .toLowerCase()
+                    .includes(search)
 
-level.name
-.toLowerCase()
-.includes(search)
+                ||
 
-||
+                String(level.creator || "")
+                    .toLowerCase()
+                    .includes(search);
 
-level.creator
-.toLowerCase()
-.includes(search);
 
+            const difficultyMatch =
 
-let difficultyMatch =
+                difficulty === "all"
 
-difficulty === "all"
+                ||
 
-||
+                level.difficulty === difficulty;
 
-level.difficulty === difficulty;
 
+            return (
+                searchMatch &&
+                difficultyMatch
+            );
 
-return (
-searchMatch &&
-difficultyMatch
-);
+        });
 
-});
 
+    let html = "";
 
-document
-.getElementById("levelCount")
-.textContent =
-levels.length;
 
+    filtered.forEach(level => {
 
+        const rank =
+            Number(level.rank);
 
-let html = "";
 
+        const points =
+            calculatePoints(rank);
 
-filtered.forEach(level => {
 
+        html += `
 
-let rank =
-sorted.findIndex(
-x => x.id === level.id
-) + 1;
+        <div
+        class="level"
+        onclick="showLevel('${level.id}')"
+        >
 
+            <div class="rank">
 
-html += `
+                #${rank}
 
-<div
-class="level"
-onclick="showLevel(${level.id})"
->
+            </div>
 
 
-<div class="rank">
+            <div class="thumbnail">
 
-#${rank}
+                ${level.name.charAt(0)}
 
-</div>
+            </div>
 
 
-<div class="thumbnail">
+            <div>
 
-${level.name.charAt(0)}
+                <div class="level-name">
 
-</div>
+                    ${escapeHTML(level.name)}
 
+                </div>
 
-<div>
 
+                <div class="creator">
 
-<div class="level-name">
+                    by ${escapeHTML(level.creator)}
 
-${level.name}
+                    ${
+                        level.verifier
+                        ?
+                        " • verified by " +
+                        escapeHTML(level.verifier)
+                        :
+                        ""
+                    }
 
-</div>
+                </div>
 
+            </div>
 
-<div class="creator">
 
-by ${level.creator}
+            <div class="points">
 
-${
-level.verifier
-?
+                ${points}
 
-" • verified by " +
-level.verifier
+                <small>
+                    points
+                </small>
 
-:
+            </div>
 
-""
-}
+        </div>
 
-</div>
+        `;
 
+    });
 
-</div>
 
+    if (!html) {
 
-<div class="points">
+        html = `
 
-${level.points}
+        <div class="loading">
 
-<small>
-points
-</small>
+            No levels found.
 
-</div>
+        </div>
 
+        `;
 
-</div>
+    }
 
-`;
 
-});
+    document
+        .getElementById("levelList")
+        .innerHTML =
+        html;
 
-
-if (!html) {
-
-html = `
-
-<div
-style="
-padding:40px;
-text-align:center;
-color:#858fa1;
-">
-
-No levels found.
-
-</div>
-
-`;
-
-}
-
-
-document
-.getElementById("levelList")
-.innerHTML =
-html;
-
-
-renderAdmin();
-
-renderPlayers();
-
-}
-
+};
 
 
 /* =========================
    LEVEL DETAILS
 ========================= */
 
-function showLevel(id) {
+window.showLevel = function(id) {
 
+    const level =
+        levels.find(
+            x => x.id === id
+        );
 
-let level =
-levels.find(
-x => x.id === id
-);
 
+    if (!level) return;
 
-if (!level) return;
 
+    const rank =
+        Number(level.rank);
 
-let sorted =
-sortedLevels();
 
+    const points =
+        calculatePoints(rank);
 
-let rank =
-sorted.findIndex(
-x => x.id === id
-) + 1;
 
+    document
+        .getElementById("detailContent")
+        .innerHTML = `
 
-document
-.getElementById("detailContent")
-.innerHTML = `
+        <div class="big-thumbnail">
 
+            ${level.name.charAt(0)}
 
-<div class="big-thumbnail">
+        </div>
 
-${level.name.charAt(0)}
 
-</div>
+        <h2>
 
+            ${escapeHTML(level.name)}
 
-<h2>
+        </h2>
 
-${level.name}
 
-</h2>
+        <p class="muted">
 
+            Rank #${rank}
 
-<p class="muted">
+            •
 
-Rank #${rank}
+            ${escapeHTML(level.difficulty)}
 
-•
+        </p>
 
-${level.difficulty} Demon
 
-</p>
+        <p class="muted">
 
+            Created by
 
-<p class="muted">
+            <b>
+                ${escapeHTML(level.creator)}
+            </b>
 
-Created by
+            ${
+                level.verifier
+                ?
 
-<b>
-${level.creator}
-</b>
+                " • Verified by <b>" +
+                escapeHTML(level.verifier) +
+                "</b>"
 
-${
-level.verifier
-?
+                :
 
-" • Verified by <b>" +
-level.verifier +
-"</b>"
+                ""
+            }
 
-:
+        </p>
 
-""
-}
 
-</p>
+        <div class="info-grid">
 
 
+            <div class="info-box">
 
-<div class="info-grid">
+                <span>
+                    Rank
+                </span>
 
+                <b>
+                    #${rank}
+                </b>
 
-<div class="info-box">
+            </div>
 
-<span>
-Rank
-</span>
 
-<b>
-#${rank}
-</b>
+            <div class="info-box">
 
-</div>
+                <span>
+                    Points
+                </span>
 
+                <b>
+                    ${points}
+                </b>
 
-<div class="info-box">
+            </div>
 
-<span>
-Points
-</span>
 
-<b>
-${level.points}
-</b>
+            <div class="info-box">
 
-</div>
+                <span>
+                    Difficulty
+                </span>
 
+                <b>
+                    ${escapeHTML(level.difficulty)}
+                </b>
 
-<div class="info-box">
+            </div>
 
-<span>
-Difficulty
-</span>
 
-<b>
-${level.difficulty} Demon
-</b>
+            <div class="info-box">
 
-</div>
+                <span>
+                    Showcase
+                </span>
 
+                <b>
 
-<div class="info-box">
+                    ${
+                        level.video
+                        ?
+                        "YouTube"
+                        :
+                        "Not added"
+                    }
 
-<span>
-Showcase
-</span>
+                </b>
 
-<b>
+            </div>
 
-${
-level.video
-?
-"YouTube"
-:
-"Not added"
-}
 
-</b>
+        </div>
 
-</div>
 
+        <br>
 
-</div>
 
+        ${
+            level.video
 
-<br>
+            ?
 
+            `
 
-${
-level.video
+            <a
+            href="${escapeAttribute(level.video)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
 
-?
+                <button class="primary">
 
-`
+                    Watch Showcase
 
-<a
-href="${level.video}"
-target="_blank"
->
+                </button>
 
-<button class="primary">
+            </a>
 
-Watch Showcase
+            `
 
-</button>
+            :
 
-</a>
+            ""
 
-`
+        }
 
-:
+        `;
 
-""
 
-}
+    showPage("detail");
 
-`;
-
-
-showPage("detail");
-
-}
-
+};
 
 
 /* =========================
@@ -1408,503 +1318,473 @@ showPage("detail");
 
 function renderAdmin() {
 
-
-let sorted =
-sortedLevels();
-
-
-let html = "";
+    const sorted =
+        sortedLevels();
 
 
-sorted.forEach(level => {
+    let html = "";
 
 
-let rank =
-sorted.findIndex(
-x => x.id === level.id
-) + 1;
+    sorted.forEach(level => {
+
+        const rank =
+            Number(level.rank);
 
 
-html += `
+        const points =
+            calculatePoints(rank);
 
 
-<div class="admin-row">
+        html += `
+
+        <div class="admin-row">
+
+            <div>
+
+                <b>
+
+                    #${rank}
+                    ${escapeHTML(level.name)}
+
+                </b>
 
 
-<div>
+                <div class="creator">
 
-<b>
+                    ${escapeHTML(level.creator)}
 
-#${rank}
-${level.name}
+                    •
 
-</b>
+                    ${points}
+                    points
 
+                </div>
 
-<div class="creator">
-
-${level.creator}
-
-•
-
-${level.points}
-points
-
-</div>
-
-</div>
+            </div>
 
 
-<div>
+            <div>
 
-${level.difficulty}
+                ${escapeHTML(level.difficulty)}
 
-</div>
-
-
-<div>
+            </div>
 
 
-<button
-class="edit"
-onclick="openEdit(${level.id})">
+            <div>
 
-Edit
+                <button
+                class="edit"
+                onclick="openEdit('${level.id}')">
 
-</button>
+                    Edit
 
-
-<button
-class="delete"
-onclick="deleteLevel(${level.id})">
-
-Delete
-
-</button>
+                </button>
 
 
-</div>
+                <button
+                class="delete"
+                onclick="deleteLevel('${level.id}')">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
 
 
-</div>
+    if (!html) {
 
-`;
+        html = `
 
-});
+        <div class="loading">
+
+            No levels yet.
+
+        </div>
+
+        `;
+
+    }
 
 
-document
-.getElementById("adminList")
-.innerHTML =
-html;
+    document
+        .getElementById("adminList")
+        .innerHTML =
+        html;
 
 }
-
 
 
 /* =========================
    ADD LEVEL
 ========================= */
 
-function openAdd() {
+window.openAdd = function() {
+
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        "Add Level";
 
 
-document
-.getElementById("modalTitle")
-.textContent =
-"Add Level";
+    document
+        .getElementById("editID")
+        .value = "";
 
 
-document
-.getElementById("editID")
-.value =
-"";
+    document
+        .getElementById("levelName")
+        .value = "";
 
 
-document
-.getElementById("levelName")
-.value =
-"";
+    document
+        .getElementById("levelCreator")
+        .value = "";
 
 
-document
-.getElementById("levelCreator")
-.value =
-"";
+    document
+        .getElementById("levelVerifier")
+        .value = "";
 
 
-document
-.getElementById("levelVerifier")
-.value =
-"";
+    document
+        .getElementById("levelDifficulty")
+        .value =
+        "Extreme Demon";
 
 
-document
-.getElementById("levelDifficulty")
-.value =
-"Extreme";
+    document
+        .getElementById("levelRank")
+        .value = "";
 
 
-document
-.getElementById("levelPoints")
-.value =
-"";
+    document
+        .getElementById("levelVideo")
+        .value = "";
 
 
-document
-.getElementById("levelVideo")
-.value =
-"";
+    document
+        .getElementById("modal")
+        .classList.add("active");
 
-
-document
-.getElementById("modal")
-.classList.add("active");
-
-}
-
+};
 
 
 /* =========================
    EDIT LEVEL
 ========================= */
 
-function openEdit(id) {
+window.openEdit = function(id) {
+
+    const level =
+        levels.find(
+            x => x.id === id
+        );
 
 
-let level =
-levels.find(
-x => x.id === id
-);
+    if (!level) return;
 
 
-document
-.getElementById("modalTitle")
-.textContent =
-"Edit Level";
+    document
+        .getElementById("modalTitle")
+        .textContent =
+        "Edit Level";
 
 
-document
-.getElementById("editID")
-.value =
-level.id;
+    document
+        .getElementById("editID")
+        .value =
+        level.id;
 
 
-document
-.getElementById("levelName")
-.value =
-level.name;
+    document
+        .getElementById("levelName")
+        .value =
+        level.name;
 
 
-document
-.getElementById("levelCreator")
-.value =
-level.creator;
+    document
+        .getElementById("levelCreator")
+        .value =
+        level.creator;
 
 
-document
-.getElementById("levelVerifier")
-.value =
-level.verifier;
+    document
+        .getElementById("levelVerifier")
+        .value =
+        level.verifier || "";
 
 
-document
-.getElementById("levelDifficulty")
-.value =
-level.difficulty;
+    document
+        .getElementById("levelDifficulty")
+        .value =
+        level.difficulty;
 
 
-document
-.getElementById("levelPoints")
-.value =
-level.points;
+    document
+        .getElementById("levelRank")
+        .value =
+        level.rank;
 
 
-document
-.getElementById("levelVideo")
-.value =
-level.video;
+    document
+        .getElementById("levelVideo")
+        .value =
+        level.video || "";
 
 
-document
-.getElementById("modal")
-.classList.add("active");
+    document
+        .getElementById("modal")
+        .classList.add("active");
 
-}
-
+};
 
 
 /* =========================
    SAVE LEVEL
 ========================= */
 
-function saveLevel() {
+window.saveLevel = async function() {
+
+    const id =
+        document
+            .getElementById("editID")
+            .value;
 
 
-let id =
-document
-.getElementById("editID")
-.value;
+    const name =
+        document
+            .getElementById("levelName")
+            .value
+            .trim();
 
 
-let level = {
+    const creator =
+        document
+            .getElementById("levelCreator")
+            .value
+            .trim();
 
 
-id:
-id
-?
-Number(id)
-:
-Date.now(),
+    const verifier =
+        document
+            .getElementById("levelVerifier")
+            .value
+            .trim();
 
 
-name:
-document
-.getElementById("levelName")
-.value,
+    const difficulty =
+        document
+            .getElementById("levelDifficulty")
+            .value;
 
 
-creator:
-document
-.getElementById("levelCreator")
-.value,
+    const rank =
+        Number(
+            document
+                .getElementById("levelRank")
+                .value
+        );
 
 
-verifier:
-document
-.getElementById("levelVerifier")
-.value,
+    const video =
+        document
+            .getElementById("levelVideo")
+            .value
+            .trim();
 
 
-difficulty:
-document
-.getElementById("levelDifficulty")
-.value,
+    if (!name || !creator) {
+
+        alert(
+            "Enter a level name and creator."
+        );
+
+        return;
+
+    }
 
 
-points:
-Number(
-document
-.getElementById("levelPoints")
-.value
-),
+    if (
+        !rank ||
+        rank < 1 ||
+        rank > 150
+    ) {
+
+        alert(
+            "Rank must be between 1 and 150."
+        );
+
+        return;
+
+    }
 
 
-video:
-document
-.getElementById("levelVideo")
-.value
+    const levelData = {
+
+        name,
+        creator,
+        verifier,
+        difficulty,
+        rank,
+        video
+
+    };
+
+
+    try {
+
+        if (id) {
+
+            await updateDoc(
+                doc(
+                    db,
+                    "levels",
+                    id
+                ),
+                levelData
+            );
+
+        }
+
+        else {
+
+            await addDoc(
+                collection(
+                    db,
+                    "levels"
+                ),
+                levelData
+            );
+
+        }
+
+
+        closeModal();
+
+        await loadLevels();
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        alert(
+            "Could not save the level. Check your Firestore rules."
+        );
+
+    }
 
 };
-
-
-
-if (
-!level.name ||
-!level.creator
-) {
-
-
-alert(
-"Enter at least a level name and creator."
-);
-
-
-return;
-
-}
-
-
-
-if (id) {
-
-
-levels =
-levels.map(
-x =>
-x.id === Number(id)
-?
-level
-:
-x
-);
-
-
-}
-
-else {
-
-
-levels.push(level);
-
-}
-
-
-
-saveData();
-
-closeModal();
-
-renderLevels();
-
-}
-
 
 
 /* =========================
    DELETE LEVEL
 ========================= */
 
-function deleteLevel(id) {
+window.deleteLevel = async function(id) {
+
+    const level =
+        levels.find(
+            x => x.id === id
+        );
 
 
-let level =
-levels.find(
-x => x.id === id
-);
+    if (!level) return;
 
 
-if (
-confirm(
-"Delete " +
-level.name +
-"?"
-)
-) {
+    if (
+        !confirm(
+            "Delete " +
+            level.name +
+            "?"
+        )
+    ) {
+
+        return;
+
+    }
 
 
-levels =
-levels.filter(
-x => x.id !== id
-);
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "levels",
+                id
+            )
+        );
 
 
-saveData();
+        await loadLevels();
 
-renderLevels();
+    }
 
-}
+    catch(error) {
 
-}
+        console.error(error);
 
+        alert(
+            "Could not delete the level. Check your Firestore rules."
+        );
+
+    }
+
+};
 
 
 /* =========================
    CLOSE MODAL
 ========================= */
 
-function closeModal() {
+window.closeModal = function() {
+
+    document
+        .getElementById("modal")
+        .classList.remove("active");
+
+};
 
 
-document
-.getElementById("modal")
-.classList.remove("active");
+/* =========================
+   HTML SAFETY
+========================= */
+
+function escapeHTML(value) {
+
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
+function escapeAttribute(value) {
 
-/* =========================
-   PLAYER LIST
-========================= */
-
-function renderPlayers() {
-
-
-let sorted =
-[...players].sort(
-(a,b) =>
-b.points - a.points
-);
-
-
-let html = "";
-
-
-sorted.forEach(
-(player,index) => {
-
-
-html += `
-
-
-<div class="level">
-
-
-<div class="rank">
-
-#${index + 1}
-
-</div>
-
-
-<div class="thumbnail">
-
-${player.name.charAt(0)}
-
-</div>
-
-
-<div>
-
-
-<div class="level-name">
-
-${player.name}
-
-</div>
-
-
-<div class="creator">
-
-${player.records}
-records
-
-•
-
-Hardest:
-${player.hardest}
-
-</div>
-
-
-</div>
-
-
-<div class="points">
-
-${player.points}
-
-<small>
-
-points
-
-</small>
-
-</div>
-
-
-</div>
-
-`;
-
-});
-
-
-document
-.getElementById("playersList")
-.innerHTML =
-html;
+    return String(value || "")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 
 }
 
 
-
 /* =========================
-   START WEBSITE
+   START
 ========================= */
 
-renderLevels();
+loadLevels();
 
 </script>
 
