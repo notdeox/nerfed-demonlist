@@ -399,11 +399,6 @@ button.primary:hover {
     margin-top: 20px;
 }
 
-.status {
-    color: #858fa1;
-    font-size: 14px;
-}
-
 @media(max-width:700px) {
 
     header {
@@ -455,10 +450,13 @@ button.primary:hover {
 
 <body>
 
+
 <header>
 
 <div class="logo">
+
 NDL <span>• Nerfed Demonlist</span>
+
 </div>
 
 <nav>
@@ -466,17 +464,23 @@ NDL <span>• Nerfed Demonlist</span>
 <button
 class="active"
 onclick="showPage('home')">
+
 Demonlist
+
 </button>
 
 <button
 onclick="showPage('players')">
+
 Players
+
 </button>
 
 <button
 onclick="showPage('admin')">
+
 Admin
+
 </button>
 
 </nav>
@@ -484,9 +488,7 @@ Admin
 </header>
 
 
-<!-- =========================
-     HOME
-========================= -->
+<!-- HOME -->
 
 <div
 id="home"
@@ -505,8 +507,10 @@ Top Demons
 </h1>
 
 <p>
+
 The NDL — Nerfed Demonlist.
 A community-driven ranking of Geometry Dash demons.
+
 </p>
 
 </div>
@@ -546,10 +550,9 @@ Players
 
 <input
 id="search"
-placeholder="Search levels or creators..."
+placeholder="Search levels, creators or IDs..."
 oninput="renderLevels()"
 >
-
 
 <select
 id="difficulty"
@@ -599,9 +602,7 @@ Loading NDL...
 </div>
 
 
-<!-- =========================
-     PLAYERS
-========================= -->
+<!-- PLAYERS -->
 
 <div
 id="players"
@@ -640,9 +641,7 @@ Player system coming soon.
 </div>
 
 
-<!-- =========================
-     ADMIN
-========================= -->
+<!-- ADMIN -->
 
 <div
 id="admin"
@@ -667,8 +666,6 @@ Login required to manage the NDL.
 </div>
 
 
-<!-- LOGIN -->
-
 <div
 id="loginBox"
 class="detail login-box">
@@ -687,12 +684,14 @@ Only the NDL administrator can modify the list.
 id="loginEmail"
 type="email"
 placeholder="Admin email"
+required
 >
 
 <input
 id="loginPassword"
 type="password"
 placeholder="Password"
+required
 >
 
 <button
@@ -707,8 +706,6 @@ Login
 
 </div>
 
-
-<!-- ADMIN PANEL -->
 
 <div
 id="adminPanel"
@@ -760,9 +757,7 @@ Loading...
 </div>
 
 
-<!-- =========================
-     LEVEL DETAIL
-========================= -->
+<!-- DETAIL -->
 
 <div
 id="detail"
@@ -788,9 +783,7 @@ id="detailContent">
 </div>
 
 
-<!-- =========================
-     ADD / EDIT MODAL
-========================= -->
+<!-- MODAL -->
 
 <div
 class="modal"
@@ -812,42 +805,58 @@ id="editID"
 <input
 id="levelName"
 placeholder="Level name"
+required
+>
+
+<input
+id="levelID"
+type="text"
+placeholder="Geometry Dash Level ID"
+required
 >
 
 <input
 id="levelCreator"
 placeholder="Creator"
+required
 >
 
 <input
 id="levelVerifier"
 placeholder="Verifier"
+required
 >
 
 <select
-id="levelDifficulty">
+id="levelDifficulty"
+required>
 
-<option>
+<option value="">
+Select difficulty
+</option>
+
+<option value="Easy Demon">
 Easy Demon
 </option>
 
-<option>
+<option value="Medium Demon">
 Medium Demon
 </option>
 
-<option>
+<option value="Hard Demon">
 Hard Demon
 </option>
 
-<option>
+<option value="Insane Demon">
 Insane Demon
 </option>
 
-<option>
+<option value="Extreme Demon">
 Extreme Demon
 </option>
 
 </select>
+
 
 <input
 id="levelRank"
@@ -855,14 +864,18 @@ type="number"
 min="1"
 max="150"
 placeholder="Rank (1-150)"
+required
 >
 
 <input
 id="levelVideo"
+type="url"
 placeholder="YouTube URL"
+required
 >
 
 </div>
+
 
 <div class="modal-buttons">
 
@@ -889,14 +902,14 @@ Save
 </div>
 
 
-<!-- =========================
-     FIREBASE
-========================= -->
-
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
     getFirestore,
@@ -907,7 +920,9 @@ import {
     deleteDoc,
     doc
 }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
 import {
     getAuth,
@@ -915,16 +930,18 @@ import {
     onAuthStateChanged,
     signOut
 }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
 /* =========================
-   FIREBASE CONFIG
+   FIREBASE
 ========================= */
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyBU2arXqJml65u3XNNHke7PVdEC0X95rLo",
+    apiKey:
+    "AIzaSyBU2arXqJml65u3XNNHke7PVdEC0X95rLo",
 
     authDomain:
     "nerfed-demonlist.firebaseapp.com",
@@ -959,10 +976,6 @@ const auth =
 getAuth(app);
 
 
-/* =========================
-   LEVEL DATA
-========================= */
-
 let levels = [];
 
 
@@ -974,13 +987,14 @@ function calculatePoints(rank) {
 
     rank = Number(rank);
 
-    if (rank <= 1) {
-        return 350;
-    }
 
-    if (rank >= 150) {
+    if (rank <= 1)
+        return 350;
+
+
+    if (rank >= 150)
         return 18.71;
-    }
+
 
     const value =
         18.71 +
@@ -990,7 +1004,10 @@ function calculatePoints(rank) {
             0.65
         );
 
-    return Math.round(value * 100) / 100;
+
+    return Math.round(
+        value * 100
+    ) / 100;
 
 }
 
@@ -1016,14 +1033,13 @@ async function loadLevels() {
 
 
         snapshot.forEach(
-            documentSnapshot => {
+            item => {
 
                 levels.push({
 
-                    id:
-                    documentSnapshot.id,
+                    id: item.id,
 
-                    ...documentSnapshot.data()
+                    ...item.data()
 
                 });
 
@@ -1039,7 +1055,9 @@ async function loadLevels() {
 
 
         document
-            .getElementById("levelCount")
+            .getElementById(
+                "levelCount"
+            )
             .textContent =
             levels.length;
 
@@ -1052,23 +1070,24 @@ async function loadLevels() {
 
     catch(error) {
 
-        console.error(
-            "Firestore error:",
-            error
-        );
+        console.error(error);
 
 
         document
-            .getElementById("levelList")
+            .getElementById(
+                "levelList"
+            )
             .innerHTML = `
 
             <div class="error">
 
-            Failed to load the NDL.
+                Failed to load the NDL.
 
-            <br><br>
+                <br><br>
 
-            ${escapeHTML(error.message)}
+                ${escapeHTML(
+                    error.message
+                )}
 
             </div>
 
@@ -1086,7 +1105,9 @@ async function loadLevels() {
 window.showPage = function(page) {
 
     document
-        .querySelectorAll(".page")
+        .querySelectorAll(
+            ".page"
+        )
         .forEach(
             element =>
             element.classList.remove(
@@ -1097,24 +1118,11 @@ window.showPage = function(page) {
 
     document
         .getElementById(page)
-        .classList.add("active");
+        .classList.add(
+            "active"
+        );
 
 };
-
-
-/* =========================
-   SORT
-========================= */
-
-function sortedLevels() {
-
-    return [...levels].sort(
-        (a,b) =>
-        Number(a.rank) -
-        Number(b.rank)
-    );
-
-}
 
 
 /* =========================
@@ -1125,131 +1133,157 @@ window.renderLevels = function() {
 
     const search =
         document
-            .getElementById("search")
+            .getElementById(
+                "search"
+            )
             .value
             .toLowerCase();
 
 
     const difficulty =
         document
-            .getElementById("difficulty")
+            .getElementById(
+                "difficulty"
+            )
             .value;
 
 
-    const sorted =
-        sortedLevels();
-
-
     const filtered =
-        sorted.filter(level => {
+        levels.filter(
+            level => {
 
-            const searchMatch =
+                const searchMatch =
 
-                String(
-                    level.name || ""
-                )
-                .toLowerCase()
-                .includes(search)
+                    String(
+                        level.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
 
-                ||
+                    ||
 
-                String(
-                    level.creator || ""
-                )
-                .toLowerCase()
-                .includes(search);
+                    String(
+                        level.creator || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
 
+                    ||
 
-            const difficultyMatch =
-
-                difficulty === "all"
-
-                ||
-
-                level.difficulty ===
-                difficulty;
+                    String(
+                        level.levelID || ""
+                    )
+                    .toLowerCase()
+                    .includes(search);
 
 
-            return (
-                searchMatch &&
-                difficultyMatch
-            );
+                const difficultyMatch =
 
-        });
+                    difficulty === "all"
+
+                    ||
+
+                    level.difficulty ===
+                    difficulty;
+
+
+                return (
+                    searchMatch &&
+                    difficultyMatch
+                );
+
+            }
+        );
 
 
     let html = "";
 
 
-    filtered.forEach(level => {
+    filtered.forEach(
+        level => {
 
-        const rank =
-            Number(level.rank);
+            const rank =
+                Number(
+                    level.rank
+                );
 
 
-        const points =
-            calculatePoints(rank);
+            const points =
+                calculatePoints(
+                    rank
+                );
 
 
-        html += `
+            html += `
 
-        <div
-        class="level"
-        onclick="showLevel('${level.id}')">
+            <div
+            class="level"
+            onclick="showLevel('${level.id}')">
 
-            <div class="rank">
-                #${rank}
-            </div>
+                <div class="rank">
 
-            <div class="thumbnail">
-                ${escapeHTML(
-                    String(
-                        level.name || "?"
-                    ).charAt(0)
-                )}
-            </div>
-
-            <div>
-
-                <div class="level-name">
-                    ${escapeHTML(level.name)}
-                </div>
-
-                <div class="creator">
-
-                    by
-                    ${escapeHTML(level.creator)}
-
-                    ${
-                        level.verifier
-                        ?
-                        " • verified by " +
-                        escapeHTML(
-                            level.verifier
-                        )
-                        :
-                        ""
-                    }
+                    #${rank}
 
                 </div>
 
+
+                <div class="thumbnail">
+
+                    ${escapeHTML(
+                        String(
+                            level.name ||
+                            "?"
+                        ).charAt(0)
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <div class="level-name">
+
+                        ${escapeHTML(
+                            level.name
+                        )}
+
+                    </div>
+
+
+                    <div class="creator">
+
+                        by
+                        ${escapeHTML(
+                            level.creator
+                        )}
+
+                        •
+                        ID:
+                        ${escapeHTML(
+                            level.levelID
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="points">
+
+                    ${points}
+
+                    <small>
+                        points
+                    </small>
+
+                </div>
+
             </div>
 
-            <div class="points">
+            `;
 
-                ${points}
-
-                <small>
-                    points
-                </small>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
+        }
+    );
 
 
     if (!html) {
@@ -1257,7 +1291,9 @@ window.renderLevels = function() {
         html = `
 
         <div class="loading">
+
             No levels found.
+
         </div>
 
         `;
@@ -1266,7 +1302,9 @@ window.renderLevels = function() {
 
 
     document
-        .getElementById("levelList")
+        .getElementById(
+            "levelList"
+        )
         .innerHTML =
         html;
 
@@ -1285,26 +1323,34 @@ window.showLevel = function(id) {
         );
 
 
-    if (!level) return;
+    if (!level)
+        return;
 
 
     const rank =
-        Number(level.rank);
+        Number(
+            level.rank
+        );
 
 
     const points =
-        calculatePoints(rank);
+        calculatePoints(
+            rank
+        );
 
 
     document
-        .getElementById("detailContent")
+        .getElementById(
+            "detailContent"
+        )
         .innerHTML = `
 
         <div class="big-thumbnail">
 
             ${escapeHTML(
                 String(
-                    level.name || "?"
+                    level.name ||
+                    "?"
                 ).charAt(0)
             )}
 
@@ -1312,7 +1358,11 @@ window.showLevel = function(id) {
 
 
         <h2>
-            ${escapeHTML(level.name)}
+
+            ${escapeHTML(
+                level.name
+            )}
+
         </h2>
 
 
@@ -1334,25 +1384,30 @@ window.showLevel = function(id) {
             Created by
 
             <b>
-                ${escapeHTML(level.creator)}
+
+                ${escapeHTML(
+                    level.creator
+                )}
+
             </b>
 
-            ${
-                level.verifier
-                ?
-                " • Verified by <b>" +
-                escapeHTML(
+            •
+
+            Verified by
+
+            <b>
+
+                ${escapeHTML(
                     level.verifier
-                ) +
-                "</b>"
-                :
-                ""
-            }
+                )}
+
+            </b>
 
         </p>
 
 
         <div class="info-grid">
+
 
             <div class="info-box">
 
@@ -1362,6 +1417,21 @@ window.showLevel = function(id) {
 
                 <b>
                     #${rank}
+                </b>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span>
+                    Level ID
+                </span>
+
+                <b>
+                    ${escapeHTML(
+                        level.levelID
+                    )}
                 </b>
 
             </div>
@@ -1402,15 +1472,7 @@ window.showLevel = function(id) {
                 </span>
 
                 <b>
-
-                    ${
-                        level.video
-                        ?
-                        "YouTube"
-                        :
-                        "Not added"
-                    }
-
+                    YouTube
                 </b>
 
             </div>
@@ -1421,33 +1483,20 @@ window.showLevel = function(id) {
         <br>
 
 
-        ${
+        <a
+        href="${escapeAttribute(
             level.video
+        )}"
+        target="_blank"
+        rel="noopener noreferrer">
 
-            ?
+            <button class="primary">
 
-            `
+                Watch Showcase
 
-            <a
-            href="${escapeAttribute(
-                level.video
-            )}"
-            target="_blank"
-            rel="noopener noreferrer">
+            </button>
 
-                <button class="primary">
-                    Watch Showcase
-                </button>
-
-            </a>
-
-            `
-
-            :
-
-            ""
-
-        }
+        </a>
 
         `;
 
@@ -1464,87 +1513,100 @@ window.showLevel = function(id) {
 function renderAdmin() {
 
     const sorted =
-        sortedLevels();
+        [...levels].sort(
+            (a,b) =>
+            Number(a.rank) -
+            Number(b.rank)
+        );
 
 
     let html = "";
 
 
-    sorted.forEach(level => {
+    sorted.forEach(
+        level => {
 
-        const rank =
-            Number(level.rank);
-
-
-        const points =
-            calculatePoints(rank);
-
-
-        html += `
-
-        <div class="admin-row">
-
-            <div>
-
-                <b>
-
-                    #${rank}
-                    ${escapeHTML(level.name)}
-
-                </b>
+            const rank =
+                Number(
+                    level.rank
+                );
 
 
-                <div class="creator">
+            const points =
+                calculatePoints(
+                    rank
+                );
+
+
+            html += `
+
+            <div class="admin-row">
+
+                <div>
+
+                    <b>
+
+                        #${rank}
+                        ${escapeHTML(
+                            level.name
+                        )}
+
+                    </b>
+
+
+                    <div class="creator">
+
+                        ID:
+                        ${escapeHTML(
+                            level.levelID
+                        )}
+
+                        •
+
+                        ${points}
+                        points
+
+                    </div>
+
+                </div>
+
+
+                <div>
 
                     ${escapeHTML(
-                        level.creator
+                        level.difficulty
                     )}
 
-                    •
+                </div>
 
-                    ${points}
-                    points
+
+                <div>
+
+                    <button
+                    class="edit"
+                    onclick="openEdit('${level.id}')">
+
+                        Edit
+
+                    </button>
+
+
+                    <button
+                    class="delete"
+                    onclick="deleteLevel('${level.id}')">
+
+                        Delete
+
+                    </button>
 
                 </div>
 
             </div>
 
+            `;
 
-            <div>
-
-                ${escapeHTML(
-                    level.difficulty
-                )}
-
-            </div>
-
-
-            <div>
-
-                <button
-                class="edit"
-                onclick="openEdit('${level.id}')">
-
-                    Edit
-
-                </button>
-
-
-                <button
-                class="delete"
-                onclick="deleteLevel('${level.id}')">
-
-                    Delete
-
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
+        }
+    );
 
 
     if (!html) {
@@ -1552,7 +1614,9 @@ function renderAdmin() {
         html = `
 
         <div class="loading">
+
             No levels yet.
+
         </div>
 
         `;
@@ -1561,7 +1625,9 @@ function renderAdmin() {
 
 
     document
-        .getElementById("adminList")
+        .getElementById(
+            "adminList"
+        )
         .innerHTML =
         html;
 
@@ -1586,49 +1652,73 @@ window.openAdd = function() {
 
 
     document
-        .getElementById("modalTitle")
+        .getElementById(
+            "modalTitle"
+        )
         .textContent =
         "Add Level";
 
 
     document
-        .getElementById("editID")
+        .getElementById(
+            "editID"
+        )
         .value = "";
 
 
     document
-        .getElementById("levelName")
+        .getElementById(
+            "levelName"
+        )
         .value = "";
 
 
     document
-        .getElementById("levelCreator")
+        .getElementById(
+            "levelID"
+        )
         .value = "";
 
 
     document
-        .getElementById("levelVerifier")
+        .getElementById(
+            "levelCreator"
+        )
         .value = "";
 
 
     document
-        .getElementById("levelDifficulty")
-        .value =
-        "Extreme Demon";
-
-
-    document
-        .getElementById("levelRank")
+        .getElementById(
+            "levelVerifier"
+        )
         .value = "";
 
 
     document
-        .getElementById("levelVideo")
+        .getElementById(
+            "levelDifficulty"
+        )
         .value = "";
 
 
     document
-        .getElementById("modal")
+        .getElementById(
+            "levelRank"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "levelVideo"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "modal"
+        )
         .classList.add(
             "active"
         );
@@ -1659,59 +1749,86 @@ window.openEdit = function(id) {
         );
 
 
-    if (!level) return;
+    if (!level)
+        return;
 
 
     document
-        .getElementById("modalTitle")
+        .getElementById(
+            "modalTitle"
+        )
         .textContent =
         "Edit Level";
 
 
     document
-        .getElementById("editID")
+        .getElementById(
+            "editID"
+        )
         .value =
         level.id;
 
 
     document
-        .getElementById("levelName")
+        .getElementById(
+            "levelName"
+        )
         .value =
         level.name;
 
 
     document
-        .getElementById("levelCreator")
+        .getElementById(
+            "levelID"
+        )
+        .value =
+        level.levelID;
+
+
+    document
+        .getElementById(
+            "levelCreator"
+        )
         .value =
         level.creator;
 
 
     document
-        .getElementById("levelVerifier")
+        .getElementById(
+            "levelVerifier"
+        )
         .value =
-        level.verifier || "";
+        level.verifier;
 
 
     document
-        .getElementById("levelDifficulty")
+        .getElementById(
+            "levelDifficulty"
+        )
         .value =
         level.difficulty;
 
 
     document
-        .getElementById("levelRank")
+        .getElementById(
+            "levelRank"
+        )
         .value =
         level.rank;
 
 
     document
-        .getElementById("levelVideo")
+        .getElementById(
+            "levelVideo"
+        )
         .value =
-        level.video || "";
+        level.video;
 
 
     document
-        .getElementById("modal")
+        .getElementById(
+            "modal"
+        )
         .classList.add(
             "active"
         );
@@ -1738,62 +1855,97 @@ window.saveLevel = async function() {
 
     const id =
         document
-            .getElementById("editID")
+            .getElementById(
+                "editID"
+            )
             .value;
 
 
     const name =
         document
-            .getElementById("levelName")
+            .getElementById(
+                "levelName"
+            )
+            .value
+            .trim();
+
+
+    const levelID =
+        document
+            .getElementById(
+                "levelID"
+            )
             .value
             .trim();
 
 
     const creator =
         document
-            .getElementById("levelCreator")
+            .getElementById(
+                "levelCreator"
+            )
             .value
             .trim();
 
 
     const verifier =
         document
-            .getElementById("levelVerifier")
+            .getElementById(
+                "levelVerifier"
+            )
             .value
             .trim();
 
 
     const difficulty =
         document
-            .getElementById("levelDifficulty")
+            .getElementById(
+                "levelDifficulty"
+            )
             .value;
 
 
     const rank =
         Number(
             document
-                .getElementById("levelRank")
+                .getElementById(
+                    "levelRank"
+                )
                 .value
         );
 
 
     const video =
         document
-            .getElementById("levelVideo")
+            .getElementById(
+                "levelVideo"
+            )
             .value
             .trim();
 
 
-    if (!name || !creator) {
+    /* EVERY FIELD IS REQUIRED */
+
+    if (
+        !name ||
+        !levelID ||
+        !creator ||
+        !verifier ||
+        !difficulty ||
+        !rank ||
+        !video
+    ) {
 
         alert(
-            "Enter a level name and creator."
+            "Please fill out every field."
         );
 
         return;
 
     }
 
+
+    /* VALIDATE RANK */
 
     if (
         !Number.isInteger(rank) ||
@@ -1809,6 +1961,8 @@ window.saveLevel = async function() {
 
     }
 
+
+    /* CHECK DUPLICATE RANK */
 
     const duplicate =
         levels.find(
@@ -1831,14 +1985,64 @@ window.saveLevel = async function() {
     }
 
 
+    /* CHECK LEVEL ID */
+
+    const duplicateID =
+        levels.find(
+            level =>
+                String(
+                    level.levelID
+                ) === levelID &&
+                level.id !== id
+        );
+
+
+    if (duplicateID) {
+
+        alert(
+            "That Geometry Dash Level ID is already being used."
+        );
+
+        return;
+
+    }
+
+
+    /* VALIDATE YOUTUBE */
+
+    if (
+        !video.includes(
+            "youtube.com"
+        ) &&
+        !video.includes(
+            "youtu.be"
+        )
+    ) {
+
+        alert(
+            "Please enter a valid YouTube URL."
+        );
+
+        return;
+
+    }
+
+
     const levelData = {
 
-        name,
-        creator,
-        verifier,
-        difficulty,
-        rank,
-        video
+        name: name,
+
+        levelID: levelID,
+
+        creator: creator,
+
+        verifier: verifier,
+
+        difficulty: difficulty,
+
+        rank: rank,
+
+        video: video
 
     };
 
@@ -1848,12 +2052,15 @@ window.saveLevel = async function() {
         if (id) {
 
             await updateDoc(
+
                 doc(
                     db,
                     "levels",
                     id
                 ),
+
                 levelData
+
             );
 
         }
@@ -1861,11 +2068,14 @@ window.saveLevel = async function() {
         else {
 
             await addDoc(
+
                 collection(
                     db,
                     "levels"
                 ),
+
                 levelData
+
             );
 
         }
@@ -1877,13 +2087,13 @@ window.saveLevel = async function() {
 
     }
 
+
     catch(error) {
 
         console.error(error);
 
         alert(
-            "Could not save the level. " +
-            "Make sure you're logged into the correct admin account."
+            "Could not save the level."
         );
 
     }
@@ -1892,7 +2102,7 @@ window.saveLevel = async function() {
 
 
 /* =========================
-   DELETE LEVEL
+   DELETE
 ========================= */
 
 window.deleteLevel = async function(id) {
@@ -1914,7 +2124,8 @@ window.deleteLevel = async function(id) {
         );
 
 
-    if (!level) return;
+    if (!level)
+        return;
 
 
     if (
@@ -1923,27 +2134,27 @@ window.deleteLevel = async function(id) {
             level.name +
             "?"
         )
-    ) {
-
+    )
         return;
-
-    }
 
 
     try {
 
         await deleteDoc(
+
             doc(
                 db,
                 "levels",
                 id
             )
+
         );
 
 
         await loadLevels();
 
     }
+
 
     catch(error) {
 
@@ -1965,7 +2176,9 @@ window.deleteLevel = async function(id) {
 window.closeModal = function() {
 
     document
-        .getElementById("modal")
+        .getElementById(
+            "modal"
+        )
         .classList.remove(
             "active"
         );
@@ -1981,14 +2194,18 @@ window.login = async function() {
 
     const email =
         document
-            .getElementById("loginEmail")
+            .getElementById(
+                "loginEmail"
+            )
             .value
             .trim();
 
 
     const password =
         document
-            .getElementById("loginPassword")
+            .getElementById(
+                "loginPassword"
+            )
             .value;
 
 
@@ -2013,10 +2230,13 @@ window.login = async function() {
 
 
         document
-            .getElementById("loginPassword")
+            .getElementById(
+                "loginPassword"
+            )
             .value = "";
 
     }
+
 
     catch(error) {
 
@@ -2117,7 +2337,7 @@ onAuthStateChanged(
 
 
 /* =========================
-   HTML SAFETY
+   SECURITY HELPERS
 ========================= */
 
 function escapeHTML(value) {
@@ -2125,22 +2345,27 @@ function escapeHTML(value) {
     return String(
         value || ""
     )
+
     .replace(
         /&/g,
         "&amp;"
     )
+
     .replace(
         /</g,
         "&lt;"
     )
+
     .replace(
         />/g,
         "&gt;"
     )
+
     .replace(
         /"/g,
         "&quot;"
     )
+
     .replace(
         /'/g,
         "&#039;"
@@ -2154,14 +2379,17 @@ function escapeAttribute(value) {
     return String(
         value || ""
     )
+
     .replace(
         /"/g,
         "&quot;"
     )
+
     .replace(
         /</g,
         "&lt;"
     )
+
     .replace(
         />/g,
         "&gt;"
