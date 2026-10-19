@@ -1,3 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100b1d">
+<title>Nerfed Demonlist — NDL</title>
+<style>
+:root{color-scheme:dark;--bg:#0c0913;--panel:#151020;--panel2:#1c152b;--line:#302342;--purple:#8b5cf6;--purple2:#6d35d4;--text:#f5f0ff;--muted:#a99dbd;--red:#f87171;--green:#a78bfa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#211236 0,#0c0913 48%);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:9px 13px;color:var(--text);background:#241a35;transition:.15s}button:hover{filter:brightness(1.15);transform:translateY(-1px)}button.primary{background:linear-gradient(135deg,#8b5cf6,#6d35d4);border-color:#9c76f8;font-weight:700}button.delete{color:#fecaca;border-color:#63303d;background:#321722}button.edit{background:#2a2040}.wrap{width:min(1050px,calc(100% - 32px));margin:auto}.topbar{border-bottom:1px solid #2b2039;background:#0d0915dd;backdrop-filter:blur(12px);position:sticky;top:0;z-index:5}.topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.04em;font-size:20px}.brand-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#a78bfa,#6d28d9);box-shadow:0 0 25px #7c3aed40;font-size:17px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em;font-weight:700}.nav{display:flex;gap:6px;flex-wrap:wrap}.nav button{background:transparent;border-color:transparent;color:var(--muted)}.nav button.active,.nav button:hover{background:#261a38;border-color:#44305d;color:white}.main{padding:34px 0 70px}.page{display:none}.page.active{display:block}.hero{padding:28px;border:1px solid #39264f;border-radius:20px;background:linear-gradient(125deg,#211433,#151020 65%);margin-bottom:22px;box-shadow:0 20px 70px #0002}.eyebrow{color:#c4b5fd;text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:11px}.hero h1{font-size:clamp(28px,5vw,42px);letter-spacing:-.05em;line-height:1.12;margin:8px 0}.hero p{color:var(--muted);margin:0;max-width:650px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:22px 0 12px}.section-head h2{margin:0;font-size:19px}.count{color:var(--muted);font-size:13px}.level-list,.admin-list{display:grid;gap:9px}.level{display:grid;grid-template-columns:54px 46px minmax(0,1fr) auto;align-items:center;gap:14px;padding:13px 16px;background:linear-gradient(110deg,#191225,#14101c);border:1px solid #2c203a;border-radius:14px;cursor:pointer;transition:.15s}.level:hover{border-color:#8054c5;transform:translateY(-1px);background:#21172f}.rank{font-size:16px;font-weight:850;color:#c4b5fd;text-align:center}.thumbnail,.big-thumbnail{display:grid;place-items:center;background:linear-gradient(145deg,#5b21b6,#a855f7);border:1px solid #c4b5fd55;color:white;font-weight:900;text-transform:uppercase;box-shadow:inset 0 0 18px #fff1}.thumbnail{width:44px;height:44px;border-radius:10px;font-size:20px}.level-name{font-weight:800;font-size:15px;overflow-wrap:anywhere}.creator{color:var(--muted);font-size:12px;margin-top:3px;overflow-wrap:anywhere}.points{text-align:right;font-weight:850;color:#ddd0ff;font-variant-numeric:tabular-nums}.points small{display:block;color:var(--muted);font-size:10px;font-weight:600}.card{background:#151020;border:1px solid var(--line);border-radius:16px;padding:20px}.muted{color:var(--muted)}.admin-row{display:grid;grid-template-columns:minmax(0,1fr) 100px auto;align-items:center;gap:14px;background:#191225;border:1px solid #2c203a;border-radius:12px;padding:13px 15px}.admin-actions{display:flex;gap:7px;flex-wrap:wrap}.form{display:grid;gap:13px}.form label{display:grid;gap:6px;color:#d8cde9;font-size:13px;font-weight:650}.form input,.form select{width:100%;padding:11px 12px;border-radius:9px;border:1px solid #423252;background:#0f0b17;color:var(--text);outline:none}.form input:focus,.form select:focus{border-color:#9b72f4;box-shadow:0 0 0 3px #8b5cf622}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.modal{display:none;position:fixed;inset:0;z-index:10;background:#05030bd9;align-items:center;justify-content:center;padding:18px}.modal.active{display:flex}.modal-panel{width:min(560px,100%);max-height:90vh;overflow:auto;background:#171021;border:1px solid #4a3564;border-radius:18px;padding:22px;box-shadow:0 25px 90px #0008}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0}.modal-buttons{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.detail-card{max-width:760px;margin:auto}.big-thumbnail{width:100%;height:180px;border-radius:14px;font-size:72px;margin-bottom:20px}.info-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:20px}.info-box{padding:13px;border-radius:11px;background:#21172f;border:1px solid #382849;min-width:0}.info-box span{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.info-box b{overflow-wrap:anywhere}.error-message{padding:18px;border:1px solid #783c4b;background:#301723;color:#fecaca;border-radius:12px}.footer{color:#6f637e;text-align:center;font-size:12px;padding-top:28px}.empty{padding:34px;text-align:center;color:#9589a6}.login-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}.status-dot{width:8px;height:8px;background:#a78bfa;border-radius:50%;display:inline-block}
+@media(max-width:650px){.topbar-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}.nav button{flex:1;padding:8px 6px}.main{padding-top:20px}.hero{padding:21px}.level{grid-template-columns:36px 40px minmax(0,1fr);gap:9px;padding:11px}.thumbnail{width:38px;height:38px}.points{grid-column:3;text-align:left;font-size:13px}.points small{display:inline;margin-left:4px}.admin-row{grid-template-columns:minmax(0,1fr);gap:8px}.admin-actions{justify-content:flex-start}.form-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr 1fr}.brand{font-size:18px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topbar-inner">
+  <div class="brand"><div class="brand-icon">NDL</div><div>Nerfed Demonlist<small>COMMUNITY LEVEL RANKINGS</small></div></div>
+  <nav class="nav" aria-label="Main navigation">
+    <button class="active" data-page="demonlist" onclick="showPage('demonlist');setActiveNav(this)">Demonlist</button>
+    <button data-page="players" onclick="showPage('players');setActiveNav(this)">Players</button>
+    <button data-page="admin" onclick="showPage('admin');setActiveNav(this)">Admin</button>
+  </nav>
+</div></header>
+<main class="wrap main">
+  <section id="demonlist" class="page active">
+    <div class="hero"><div class="eyebrow">Geometry Dash · Community rankings</div><h1>Nerfed Demonlist</h1><p>Rankings for nerfed versions of challenging Geometry Dash levels. Find a level to view its details and points.</p></div>
+    <div class="section-head"><h2>Top Levels</h2><span class="count"><span id="levelCount">0</span> levels</span></div>
+    <div id="levelList" class="level-list"><div class="empty">Loading levels from Firebase…</div></div>
+  </section>
+  <section id="players" class="page">
+    <div class="hero"><div class="eyebrow">NDL leaderboard</div><h1>Players</h1><p>Player rankings will appear here when player records and scoring are connected.</p></div>
+    <div class="card muted">The current uploaded script contains level management only; it doesn't yet include a player database or player-points logic.</div>
+  </section>
+  <section id="admin" class="page">
+    <div class="hero"><div class="eyebrow">Management</div><h1>Admin panel</h1><p>Sign in with your Firebase Authentication account to manage NDL levels. Firestore security rules must also restrict write access to authorized admins.</p></div>
+    <div class="card" style="margin-bottom:18px">
+      <div class="login-status"><span class="status-dot"></span><span id="authStatus" class="muted">Not signed in</span></div>
+      <div class="form-grid">
+        <label class="form"><span>Email</span><input id="loginEmail" type="email" autocomplete="username" placeholder="Admin email"></label>
+        <label class="form"><span>Password</span><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password"></label>
+      </div>
+      <div class="modal-buttons"><button onclick="logout()">Log out</button><button class="primary" onclick="login()">Sign in</button></div>
+    </div>
+    <div class="section-head"><h2>Manage Levels</h2><button class="primary" onclick="openAdd()">+ Add Level</button></div>
+    <div id="adminList" class="admin-list"><div class="empty">Loading levels…</div></div>
+  </section>
+  <section id="detail" class="page"><div class="detail-card card" id="detailContent"></div><div style="margin-top:14px"><button onclick="showPage('demonlist');setActiveNav(document.querySelector('[data-page=demonlist]'))">← Back to Demonlist</button></div></section>
+  <div class="footer">Nerfed Demonlist · NDL · Community project</div>
+</main>
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)closeModal()">
+  <div class="modal-panel"><div class="modal-head"><h2 id="modalTitle">Add Level</h2><button aria-label="Close" onclick="closeModal()">✕</button></div>
+    <input type="hidden" id="editID">
+    <div class="form">
+      <label>Level name<input id="levelName" placeholder="e.g. Acheron" required></label>
+      <div class="form-grid"><label>Geometry Dash level ID<input id="levelID" placeholder="Level ID" required></label><label>Rank (1–150)<input id="levelRank" type="number" min="1" max="150" placeholder="1" required></label></div>
+      <div class="form-grid"><label>Creator<input id="levelCreator" placeholder="Creator name" required></label><label>Verifier<input id="levelVerifier" placeholder="Verifier name" required></label></div>
+      <div class="form-grid"><label>Difficulty<select id="levelDifficulty"><option>Extreme</option><option>Insane</option><option>Hard</option></select></label><label>Showcase URL (optional)<input id="levelVideo" type="url" placeholder="https://…"></label></div>
+    </div>
+    <div class="modal-buttons"><button onclick="closeModal()">Cancel</button><button class="primary" onclick="saveLevel()">Save Level</button></div>
+  </div>
+</div>
+<script>
+function setActiveNav(button){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(button)button.classList.add('active')}
+</script>
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
@@ -24,13 +87,13 @@ import {
 ========================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBU2arXqJml65u3XNNHke7PVdEC0X95rLo",
-    authDomain: "nerfed-demonlist.firebaseapp.com",
-    projectId: "nerfed-demonlist",
-    storageBucket: "nerfed-demonlist.firebasestorage.app",
-    messagingSenderId: "996399312994",
-    appId: "1:996399312994:web:3cd9bc6b38185e4666a13b",
-    measurementId: "G-D9BVJBBGTQ"
+    apiKey: "AIzaSyBDTVJFX8oaywyrGwcHPFBvrdbgW8xsOw4",
+    authDomain: "nerfed-demonlist-v2.firebaseapp.com",
+    projectId: "nerfed-demonlist-v2",
+    storageBucket: "nerfed-demonlist-v2.firebasestorage.app",
+    messagingSenderId: "92755325444",
+    appId: "1:92755325444:web:3d76814f1e209b5cf47b51",
+    measurementId: "G-G451Z46366"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -405,8 +468,7 @@ window.saveLevel = async function() {
         !creator ||
         !verifier ||
         !difficulty ||
-        !rank ||
-        !video
+        !rank
     ) {
 
         alert(
@@ -464,7 +526,13 @@ window.saveLevel = async function() {
 
         closeModal();
 
-        await loadLevels();
+        await loadLevels().catch(error => {
+    console.error("Failed to load NDL levels:", error);
+    const list = document.getElementById("levelList");
+    if (list) {
+        list.innerHTML = `<div class="error-message">Couldn't load levels from Firebase. Check your internet connection, Firestore rules, and browser Console.</div>`;
+    }
+});
 
     } catch (error) {
 
@@ -505,7 +573,13 @@ window.deleteLevel = async function(id) {
             doc(db, "levels", id)
         );
 
-        await loadLevels();
+        await loadLevels().catch(error => {
+    console.error("Failed to load NDL levels:", error);
+    const list = document.getElementById("levelList");
+    if (list) {
+        list.innerHTML = `<div class="error-message">Couldn't load levels from Firebase. Check your internet connection, Firestore rules, and browser Console.</div>`;
+    }
+});
 
     } catch (error) {
 
@@ -696,6 +770,14 @@ window.openEdit = function(id) {
    START
 ========================= */
 
-loadLevels();
+loadLevels().catch(error => {
+    console.error("Failed to load NDL levels:", error);
+    const list = document.getElementById("levelList");
+    if (list) {
+        list.innerHTML = `<div class="error-message">Couldn't load levels from Firebase. Check your internet connection, Firestore rules, and browser Console.</div>`;
+    }
+});
 
 </script>
+</body>
+</html>
