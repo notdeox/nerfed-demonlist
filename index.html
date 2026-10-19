@@ -35,10 +35,10 @@
     <div class="card" style="margin-bottom:18px">
       <div class="login-status"><span class="status-dot"></span><span id="authStatus" class="muted">Not signed in</span></div>
       <div class="form-grid">
-        <label class="form"><span>Email</span><input id="loginEmail" type="email" autocomplete="username" placeholder="Admin email"></label>
+        <label class="form"><span>Username</span><input id="loginUsername" type="text" autocomplete="username" placeholder="Your username" minlength="3" maxlength="20"></label>
         <label class="form"><span>Password</span><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password"></label>
       </div>
-      <div class="modal-buttons"><button onclick="logout()">Log out</button><button class="primary" onclick="login()">Sign in</button></div>
+      <div class="modal-buttons"><button onclick="logout()">Log out</button><button onclick="registerAccount()">Create account</button><button class="primary" onclick="login()">Sign in</button></div><p class="muted" style="font-size:12px;margin-bottom:0">Use 3–20 letters, numbers, or underscores. Passwords must be at least 6 characters.</p>
     </div>
     <div class="section-head"><h2>Manage Levels</h2><button class="primary" onclick="openAdd()">+ Add Level</button></div>
     <div id="adminList" class="admin-list"><div class="empty">Loading levels…</div></div>
@@ -77,6 +77,8 @@ import {
 import {
     getAuth,
     signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    updateProfile,
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -594,34 +596,48 @@ window.deleteLevel = async function(id) {
 
 
 /* =========================
-   LOGIN
+   USERNAME AUTHENTICATION
 ========================= */
 
-window.login = async function() {
-
-    const email =
-        document.getElementById("loginEmail").value;
-
-    const password =
-        document.getElementById("loginPassword").value;
-
-    try {
-
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
-    } catch (error) {
-
-        alert(
-            "Login failed: " +
-            error.message
-        );
-
+function getUsernameEmail(rawUsername) {
+    const username = rawUsername.trim().toLowerCase();
+    if (!/^[a-z0-9_]{3,20}$/.test(username)) {
+        throw new Error("Username must be 3–20 characters and use only letters, numbers, or underscores.");
     }
+    // Firebase Authentication requires an email address. This reserved .example
+    // address is an internal login identifier, not a real contact email.
+    return `${username}@users.ndl.example`;
+}
 
+window.registerAccount = async function() {
+    const rawUsername = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+    try {
+        const email = getUsernameEmail(rawUsername);
+        if (password.length < 6) {
+            throw new Error("Password must be at least 6 characters.");
+        }
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(credential.user, { displayName: rawUsername.trim() });
+        const status = document.getElementById("authStatus");
+        if (status) status.textContent = `Signed in as ${rawUsername.trim()}`;
+        alert("NDL account created and signed in!");
+    } catch (error) {
+        console.error(error);
+        alert("Registration failed: " + (error.message || "Unknown error"));
+    }
+};
+
+window.login = async function() {
+    const rawUsername = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+    try {
+        const email = getUsernameEmail(rawUsername);
+        await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+        console.error(error);
+        alert("Login failed. Check your username and password. If you haven't registered yet, click Create account.");
+    }
 };
 
 
@@ -644,14 +660,13 @@ onAuthStateChanged(
     auth,
     user => {
 
-        if (user) {
-
-            console.log(
-                "Logged in:",
-                user.email
-            );
-
+        const status = document.getElementById("authStatus");
+        if (status) {
+            status.textContent = user
+                ? `Signed in as ${user.displayName || user.email.split("@")[0]}`
+                : "Not signed in";
         }
+        if (user) console.log("Logged in:", user.displayName || user.uid);
 
     }
 );
